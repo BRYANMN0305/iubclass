@@ -1,112 +1,100 @@
 # COM30 · Programación con Frameworks para Web
 
-Proyecto base de la **sesión S02** — el tablero de precios de la plaza de mercado, construido en clase con Angular 22.
+Proyecto de la clase, construido sesión por sesión con Angular 22. Cada sesión se publica en un
+commit propio.
 
 > **Institución Universitaria de Barranquilla · 2026-III**
 > Docente: Kevin Erney De Alba Pomárico · `kerneydealba@unibarranquilla.edu.co`
 
 ---
 
-## Qué hay aquí
+## Contenido por sesión
 
-| Ruta | Qué es |
-|---|---|
-| `src/app/tablero/` | **El componente de la clase.** Signals, computed, los tres bindings y `@for` con `track` |
-| `src/app/acerca/` | Segunda vista, mínima, para demostrar la navegación |
-| `src/app/app.routes.ts` | El esqueleto de rutas (el tema completo es la S09) |
-| `_para-stackblitz/main.ts` | El mismo código en **un solo archivo**, para quien trabaja en el navegador |
-| `CLASE_S02_PASOS.md` | Los cinco pasos con los que se construyó, para reconstruirlo o alcanzar |
+| Sesión | Ruta en la aplicación | Código | Documento |
+|---|---|---|---|
+| **S02** · Bindings, signals y computed | `/tablero` | `src/app/tablero/` | `CLASE_S02_PASOS.md` |
+| **S03** · Control de flujo, pipes y estilos | `/s03` | `src/app/s03/` | `CLASE_S03.md` |
 
-Lo que se ve al ejecutarlo: la tabla de productos con subtotales, el buscador, los botones de vender
-y reabastecer, los dos totales calculados y el mensaje condicional de venta mayorista.
+Versiones de un solo archivo para StackBlitz: `_para-stackblitz/main.ts` (S02) y
+`_para-stackblitz/s03-main.ts` (S03).
+
+La configuración regional es-CO (formato $ 1.800 y 3,14) está en `src/app/app.config.ts`.
 
 ---
 
 ## Cómo trabajar sobre este proyecto
 
-**No trabajes sobre este repositorio: es de solo lectura para ti.** Haz tu propia copia.
+Este repositorio es de consulta. Cada estudiante trabaja sobre su propia copia (fork).
 
 ### 1 · Fork
 
-Botón **Fork**, arriba a la derecha. GitHub te lleva a tu copia, con tu usuario en la URL.
-Esa es la dirección que vas a entregar.
+Botón **Fork**, arriba a la derecha. La dirección del fork, con el usuario propio en la URL, es
+la que se entrega en los talleres.
 
-### 2 · Ábrelo, según tu entorno
+### 2 · Actualizar el fork cuando se publica una sesión nueva
 
-**Si tienes Angular CLI instalada:**
+En la página del fork en GitHub: **Sync fork** → **Update branch**. Con Angular CLI, después:
 
 ```bash
-git clone https://github.com/TU-USUARIO/iubclass.git
+git pull
+```
+
+### 3 · Abrir el proyecto
+
+**Con Angular CLI:**
+
+```bash
+git clone https://github.com/USUARIO/iubclass.git
 cd iubclass
-npm install          # reconstruye node_modules, tarda un par de minutos
-ng serve             # y abre http://localhost:4200
+npm install          # reconstruye node_modules
+ng serve             # http://localhost:4200
 ```
 
-**Si trabajas en StackBlitz**, abre tu fork directamente en el navegador:
+**En StackBlitz:** abrir `https://stackblitz.com/github/USUARIO/iubclass`. Si no arranca, copiar
+el archivo de `_para-stackblitz/` de la sesión y pegarlo dentro de `src/main.ts` de un proyecto
+nuevo. Se reemplaza el **contenido** del archivo; el archivo no se elimina.
 
-```
-https://stackblitz.com/github/TU-USUARIO/iubclass
-```
-
-Si eso no arranca, usa `_para-stackblitz/main.ts`: copias su contenido y lo pegas dentro de
-`src/main.ts` de un proyecto nuevo de StackBlitz. Ojo: se reemplaza el **contenido** del archivo,
-no se borra el archivo.
-
-### 3 · Guarda tu trabajo
+### 4 · Guardar el trabajo
 
 ```bash
 git add .
-git commit -m "Taller 01 · parte B"
+git commit -m "Taller 02 · paso 2, filtro por categoría"
 git push
 ```
 
-Haz `commit` cada vez que algo te funcione, no uno solo al final. Si después lo dañas, puedes volver.
+Un `commit` por cada paso que funcione, no uno solo al final.
 
 ---
 
-## El trabajo de esta semana
+## Trabajo vigente
 
-Se entrega el **domingo 20 de septiembre, hasta las 23:59**, en el aula virtual.
+### Taller 02 · Listado con filtros, estados y pipe propio
 
-### Taller 01 · El puesto de frutas
+Cierre: **miércoles 30 de septiembre de 2026, 16:59**, en el aula virtual.
 
-El mismo problema resuelto dos veces: la **Parte A** con HTML y JavaScript a mano, la **Parte B**
-con Angular, y la **Parte C** comparando las dos. La Parte C es la que más pesa.
+- Enunciado oficial, datos de prueba y rúbrica: `COM30_S03_taller02.docx`, en el aula.
+- Orden de trabajo y relación con los ejemplos de la clase: **`GUIA_TALLER_02.md`**.
 
-### Reto S02 · Ampliar este tablero
-
-Cinco puntos sobre el código de este repositorio:
-
-1. Un `computed` que cuente los productos agotados
-2. Un aviso de inventario bajo, con `@if`
-3. Un `computed` que devuelva el producto más caro
-4. Un botón «Vender todo» por fila
-5. Ordenar la tabla por subtotal **sin mutar la signal** ← este tiene trampa
-
-> **Los enunciados completos están en el aula virtual**, con los datos de prueba y los resultados
-> esperados. Este README es solo el resumen.
-
-### Cómo se entrega
-
-Un **único PDF** hecho con la plantilla `COM30_S02_evidencias_plantilla.docx` del aula, con las
-capturas, la comparación escrita y **el enlace de tu fork** adentro.
+Los ejemplos de `src/app/s03/` muestran las técnicas con otros datos y otros criterios. El taller
+aplica esas técnicas a un caso distinto.
 
 ---
 
-## Los errores que vas a cometer, y qué significan
+## Errores frecuentes y su significado
 
-| Lo que ves | Qué es |
+| Lo que se observa | Causa |
 |---|---|
-| En pantalla sale `function…` | Falta el paréntesis al leer la signal: `{{ total }}` en vez de `{{ total() }}` |
-| El botón no hace nada, sin errores | `(click)="vender"` sin paréntesis: nombra la función, no la llama |
-| La consola muestra el dato nuevo y la pantalla el viejo | Se mutó con `push` o `++`. Va con `update()` y un valor nuevo |
-| `NG5002: @for loop must have a "track"` | Falta el `track`. No es opcional |
-| Rojo en `this.bultos = 5` | A una signal no se le asigna: se le hace `.set()` |
-| `Property 'value' does not exist on type 'EventTarget'` | Falta el `as HTMLInputElement` sobre `$event.target` |
+| En pantalla aparece el texto de una función | Falta el paréntesis al leer la signal: `{{ total }}` en vez de `{{ total() }}` |
+| El botón no hace nada y no hay error | `(click)="vender"` sin paréntesis: nombra la función, no la invoca |
+| La consola muestra el dato nuevo y la pantalla el anterior | Se modificó el estado con `push` o `++`. Se corrige con `update()` y un valor nuevo |
+| `NG5002: @for loop must have a "track" expression` | Falta `track` en el `@for` |
+| `NG8004: No pipe found with name '...'` | El pipe no está en `imports` del componente |
+| `NG0701: Missing locale data for the locale "es-CO"` | Se declaró `LOCALE_ID` sin `registerLocaleData` |
+| Al filtrar, el contenido de un campo queda en otra fila | `track $index` en una lista que se filtra (ejemplo 3 de la S03) |
+| `Property 'value' does not exist on type 'EventTarget'` | Falta `as HTMLInputElement` sobre `$event.target` |
 
-**Regla de oro:** si el error trae un código como `NG5002`, búscalo **con el código incluido** en
-[angular.dev](https://angular.dev). Es la diferencia entre encontrar la respuesta exacta y leer
-veinte foros de 2019 que además hablan de AngularJS, que es otro framework.
+Un error con código (`NG5002`, `NG8004`) se busca con el código incluido en
+[angular.dev](https://angular.dev).
 
 ---
 
@@ -114,5 +102,5 @@ veinte foros de 2019 que además hablan de AngularJS, que es otro framework.
 
 Angular **22.1** · TypeScript **6.0** · Tailwind CSS **4.1** · Node **22.22.3 o superior**
 
-La documentación que manda es **angular.dev**. Si un tutorial dice `$scope`, `*ngIf` o
-`app.component.ts`, está desactualizado.
+La documentación de referencia es **angular.dev**. Un tutorial que use `$scope`, `*ngIf` como
+sintaxis principal o `app.component.ts` corresponde a versiones anteriores.
