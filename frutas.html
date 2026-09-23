@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COM30 · Taller 01 · Puesto de frutas · Parte A</title>
+    <style>
+      :root {
+        --borde: #e2e8f0;
+        --gris: #64748b;
+        --tinta: #0f172a;
+        --fondo: #f8fafc;
+        --ambar: #fbbf24;
+        --exito: #059669;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 2rem 1rem;
+        background: var(--fondo);
+        color: var(--tinta);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        line-height: 1.5;
+      }
+      .pagina {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      header {
+        border-bottom: 4px solid var(--ambar);
+        border-radius: 0 0 0.75rem 0.75rem;
+        background: var(--tinta);
+        color: #fff;
+        padding: 1.5rem 1.75rem;
+      }
+      header .etiqueta {
+        color: var(--ambar);
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      header h1 {
+        margin: 0.2rem 0 0;
+        font-size: 1.6rem;
+      }
+      main {
+        padding: 1.75rem 0;
+      }
+      .tarjeta {
+        border: 1px solid var(--borde);
+        border-radius: 0.75rem;
+        background: #fff;
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+      }
+      thead th {
+        background: var(--tinta);
+        color: #fff;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        padding: 0.6rem 0.75rem;
+        text-align: left;
+        text-transform: uppercase;
+      }
+      tbody td {
+        border-top: 1px solid #f1f5f9;
+        padding: 0.6rem 0.75rem;
+      }
+      tbody td.ruta {
+        font-weight: 700;
+      }
+      tbody td.numero {
+        color: var(--gris);
+        text-align: right;
+      }
+      tbody td.subtotal {
+        font-weight: 700;
+        text-align: right;
+      }
+      tbody td.acciones {
+        text-align: right;
+      }
+      tbody tr.agotado {
+        opacity: 0.4;
+      }
+      button {
+        border: 0;
+        border-radius: 0.5rem;
+        background: var(--ambar);
+        color: var(--tinta);
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 700;
+        padding: 0.6rem 1.1rem;
+      }
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.35;
+      }
+      button.mini {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.7rem;
+      }
+      .totales {
+        display: grid;
+        gap: 0.75rem;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+      .total {
+        border: 1px solid var(--borde);
+        border-radius: 0.75rem;
+        background: #fff;
+        padding: 1rem 1.25rem;
+      }
+      .total .rotulo {
+        color: var(--gris);
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .total .cifra {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-top: 0.2rem;
+      }
+      .total.oscuro {
+        background: var(--tinta);
+        color: #fff;
+      }
+      .total.oscuro .rotulo {
+        color: var(--ambar);
+      }
+      #aviso {
+        border-left: 4px solid var(--exito);
+        border-radius: 0.5rem;
+        background: #ecfdf5;
+        color: #065f46;
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-top: 1.25rem;
+        padding: 0.75rem 1.25rem;
+      }
+      footer {
+        color: var(--gris);
+        font-size: 0.75rem;
+        padding: 1rem 0 2rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="pagina">
+      <header>
+        <p class="etiqueta">COM30 · Taller 01 · Parte A</p>
+        <h1>Puesto de frutas de Don Efraín</h1>
+      </header>
+
+      <main>
+        <section class="tarjeta">
+          <table>
+            <thead>
+              <tr>
+                <th>Fruta</th>
+                <th style="text-align: right">Precio</th>
+                <th style="text-align: right">Cantidad</th>
+                <th style="text-align: right">Subtotal</th>
+                <th style="text-align: right">Vender</th>
+              </tr>
+            </thead>
+            <tbody id="cuerpo"></tbody>
+          </table>
+
+          <p style="margin: 1.25rem 0 0.6rem">
+            <button id="vender-mango" type="button">Vender un mango</button>
+          </p>
+        </section>
+
+        <section class="totales">
+          <div class="total oscuro">
+            <p class="rotulo">Total en dinero</p>
+            <p class="cifra" id="total">$ 0</p>
+          </div>
+          <div class="total">
+            <p class="rotulo">Total de unidades</p>
+            <p class="cifra" id="unidades">0</p>
+          </div>
+        </section>
+
+        <p id="aviso" hidden>Jornada de venta mayorista</p>
+      </main>
+
+      <footer>COM30 · Programación con Frameworks para Web · IUB 2026-III</footer>
+    </div>
+
+    <script>
+      const frutas = [
+        { nombre: 'Mango', precio: 1800, cantidad: 12 },
+        { nombre: 'Guayaba', precio: 1200, cantidad: 8 },
+        { nombre: 'Patilla', precio: 6500, cantidad: 2 },
+        { nombre: 'Maracuyá', precio: 3400, cantidad: 5 },
+        { nombre: 'Níspero', precio: 2900, cantidad: 4 },
+      ];
+
+      const cuerpo = document.getElementById('cuerpo');
+      const totalDinero = document.getElementById('total');
+      const totalUnidades = document.getElementById('unidades');
+      const aviso = document.getElementById('aviso');
+      const botonVender = document.getElementById('vender-mango');
+
+      const formato = new Intl.NumberFormat('es-CO');
+
+      function pintar() {
+        cuerpo.innerHTML = '';
+
+        for (const fruta of frutas) {
+          const fila = document.createElement('tr');
+          if (fruta.cantidad === 0) {
+            fila.classList.add('agotado');
+          }
+
+          const celdas = [
+            { texto: fruta.nombre, clase: 'ruta' },
+            { texto: '$ ' + formato.format(fruta.precio), clase: 'numero' },
+            { texto: String(fruta.cantidad), clase: 'numero' },
+            { texto: '$ ' + formato.format(fruta.precio * fruta.cantidad), clase: 'subtotal' },
+          ];
+
+          for (const celda of celdas) {
+            const td = document.createElement('td');
+            td.className = celda.clase;
+            td.textContent = celda.texto;
+            fila.appendChild(td);
+          }
+
+          const acciones = document.createElement('td');
+          acciones.className = 'acciones';
+
+          const botonFila = document.createElement('button');
+          botonFila.type = 'button';
+          botonFila.className = 'mini';
+          botonFila.textContent = 'Vender 1';
+          botonFila.disabled = fruta.cantidad === 0;
+          botonFila.addEventListener('click', function () {
+            vender(fruta);
+          });
+
+          acciones.appendChild(botonFila);
+          fila.appendChild(acciones);
+
+          cuerpo.appendChild(fila);
+        }
+
+        const total = frutas.reduce((suma, f) => suma + f.precio * f.cantidad, 0);
+        const unidades = frutas.reduce((suma, f) => suma + f.cantidad, 0);
+
+        totalDinero.textContent = '$ ' + formato.format(total);
+        totalUnidades.textContent = formato.format(unidades);
+
+        if (total > 50000) {
+          aviso.textContent = 'Jornada de venta mayorista';
+          aviso.hidden = false;
+        } else {
+          aviso.hidden = true;
+        }
+
+        const mango = frutas.find((f) => f.nombre === 'Mango');
+        botonVender.disabled = mango.cantidad === 0;
+      }
+
+      function vender(fruta) {
+        if (fruta.cantidad > 0) {
+          fruta.cantidad = fruta.cantidad - 1;
+          pintar();
+        }
+      }
+
+      botonVender.addEventListener('click', function () {
+        const mango = frutas.find((f) => f.nombre === 'Mango');
+        if (mango) {
+          vender(mango);
+        }
+      });
+
+      pintar();
+    </script>
+  </body>
+</html>
