@@ -1,0 +1,70 @@
+<h2 class="text-2xl font-bold text-slate-900">Puesto de frutas de Don Efraín</h2>
+<p class="mt-1 text-sm text-slate-500">Taller 01 · Parte B · Angular con signals</p>
+
+<div class="mt-6 overflow-x-auto rounded-xl border border-slate-200">
+  <table class="w-full text-left text-sm">
+    <thead class="bg-slate-900 text-xs uppercase tracking-wider text-white">
+      <tr>
+        <th class="px-4 py-3">Fruta</th>
+        <th class="px-4 py-3 text-right">Precio</th>
+        <th class="px-4 py-3 text-right">Cantidad</th>
+        <th class="px-4 py-3 text-right">Subtotal</th>
+        <th class="px-4 py-3 text-right">Vender</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (f of frutas(); track f.nombre) {
+        <tr class="border-t border-slate-100" [class.opacity-40]="f.cantidad === 0">
+          <td class="px-4 py-3 font-semibold text-slate-900">{{ f.nombre }}</td>
+          <td class="px-4 py-3 text-right text-slate-600">
+            {{ f.precio | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}
+          </td>
+          <td class="px-4 py-3 text-right text-slate-600">{{ f.cantidad }}</td>
+          <td class="px-4 py-3 text-right font-semibold text-slate-900">
+            {{ f.precio * f.cantidad | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}
+          </td>
+          <td class="px-4 py-3 text-right">
+            <button
+              type="button"
+              class="rounded-md bg-slate-200 px-3 py-1 text-xs font-bold text-slate-700 disabled:opacity-30"
+              [disabled]="f.cantidad === 0"
+              (click)="vender(f.nombre)"
+            >
+              Vender 1
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<div class="mt-4">
+  <button
+    type="button"
+    class="rounded-lg bg-amber-400 px-4 py-2 text-sm font-bold text-slate-900 disabled:cursor-not-allowed disabled:opacity-30"
+    [disabled]="mangoAgotado()"
+    (click)="vender('Mango')"
+  >
+    Vender un mango
+  </button>
+</div>
+
+<div class="mt-4 grid gap-3 sm:grid-cols-2">
+  <div class="rounded-xl bg-slate-900 px-5 py-4 text-white">
+    <div class="text-xs uppercase tracking-widest text-amber-400">Total en dinero</div>
+    <div class="mt-1 text-3xl font-bold">
+      {{ total() | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}
+    </div>
+  </div>
+  <div class="rounded-xl bg-slate-100 px-5 py-4">
+    <div class="text-xs uppercase tracking-widest text-slate-500">Total de unidades</div>
+    <div class="mt-1 text-3xl font-bold text-slate-900">{{ unidades() | number }}</div>
+  </div>
+</div>
+
+@if (total() > 50000) {
+  <div class="mt-4 rounded-lg border-l-4 border-emerald-500 bg-emerald-50 px-5 py-3">
+    <p class="text-sm font-semibold text-emerald-900">Jornada de venta mayorista</p>
+  </div>
+}
