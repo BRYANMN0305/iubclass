@@ -47,7 +47,12 @@
       </tr>
     </thead>
     <tbody>
-      @for (p of visibles(); track p.nombre) {
+      <!--
+        RETO 5 · el @for recorre ordenados(), no visibles(): la lista sale
+        ordenada por subtotal descendente. El track sigue siendo p.nombre, la
+        identidad estable del ejemplo 3, porque el orden puede cambiar.
+      -->
+      @for (p of ordenados(); track p.nombre) {
         <!-- [class.x] pone y quita la clase sola, según la condición -->
         <tr
           class="border-t border-slate-100"
@@ -68,6 +73,19 @@
               (click)="vender(p.nombre)"
             >
               Vender 1
+            </button>
+            <!--
+              RETO 4 · un solo botón deja la cantidad en cero. El botón se apaga
+              solo con [disabled] y la fila se marca sola con [class.opacity-40];
+              no hace falta escribir nada más para ninguna de las dos cosas.
+            -->
+            <button
+              type="button"
+              class="ml-1 rounded-md bg-rose-500 px-3 py-1 text-xs font-bold text-white disabled:opacity-30"
+              [disabled]="p.cantidad === 0"
+              (click)="liquidar(p.nombre)"
+            >
+              Vender todo
             </button>
             <button
               type="button"
@@ -90,6 +108,17 @@
   </table>
 </div>
 
+<!--
+  RETO 2 · el aviso depende de un computed con some(). Con los datos de clase
+  aparece por el Ñame (cantidad 2). Reabastece todo y desaparece: un @if que
+  nunca se ha visto en falso no está probado.
+-->
+@if (inventarioBajo()) {
+  <div class="mt-4 rounded-lg border-l-4 border-amber-400 bg-amber-50 px-5 py-3">
+    <p class="text-sm font-semibold text-amber-900">Hay productos por agotarse</p>
+  </div>
+}
+
 <!-- LOS VALORES DERIVADOS · también se leen con paréntesis -->
 <div class="mt-4 grid gap-3 sm:grid-cols-2">
   <div class="rounded-xl bg-slate-900 px-5 py-4 text-white">
@@ -100,6 +129,23 @@
     <div class="text-xs uppercase tracking-widest text-slate-500">Unidades en el puesto</div>
     <div class="mt-1 text-3xl font-bold text-slate-900">{{ unidades() }}</div>
   </div>
+
+  <!-- RETO 1 · un número, no una lista: el .length del filter -->
+  <div class="rounded-xl bg-slate-100 px-5 py-4">
+    <div class="text-xs uppercase tracking-widest text-slate-500">Productos agotados</div>
+    <div class="mt-1 text-3xl font-bold text-slate-900">{{ agotados() }}</div>
+  </div>
+
+  <!--
+    RETO 3 · el @if cubre el caso de la lista vacía: si no hay productos,
+    masCaro() devuelve '' y la tarjeta simplemente no se muestra.
+  -->
+  @if (masCaro()) {
+    <div class="rounded-xl bg-slate-100 px-5 py-4">
+      <div class="text-xs uppercase tracking-widest text-slate-500">Producto más caro</div>
+      <div class="mt-1 text-3xl font-bold text-slate-900">{{ masCaro() }}</div>
+    </div>
+  }
 </div>
 
 <!--

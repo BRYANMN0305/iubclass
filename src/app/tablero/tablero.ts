@@ -57,6 +57,53 @@ export class Tablero {
   });
 
   // ===========================================================================
+  //  RETO 1 · Contar los productos agotados
+  // ===========================================================================
+  // filter() deja solo los de cantidad cero y .length los cuenta. Es un número,
+  // no una lista, y se actualiza solo como los otros dos totales.
+  // ---------------------------------------------------------------------------
+  agotados = computed(() => this.productos().filter((p) => p.cantidad === 0).length);
+
+  // ===========================================================================
+  //  RETO 2 · Aviso de inventario bajo
+  // ===========================================================================
+  // some() devuelve true en cuanto encuentra uno que cumpla, y false si no
+  // encuentra ninguno. Ojo: la cantidad 0 NO es inventario bajo, es inventario
+  // agotado; por eso se excluye con p.cantidad > 0.
+  // ---------------------------------------------------------------------------
+  inventarioBajo = computed(() =>
+    this.productos().some((p) => p.cantidad > 0 && p.cantidad < 3),
+  );
+
+  // ===========================================================================
+  //  RETO 3 · El producto más caro
+  // ===========================================================================
+  // reduce() compara de a dos y se queda con el mayor. La lista vacía es el
+  // caso trampa: un reduce SIN valor inicial sobre [] lanza error, así que antes
+  // de reducir se pregunta si hay algo que reducir.
+  // ---------------------------------------------------------------------------
+  masCaro = computed(() => {
+    const lista = this.productos();
+    if (lista.length === 0) return '';
+    return lista.reduce((a, b) => (b.precio > a.precio ? b : a)).nombre;
+  });
+
+  // ===========================================================================
+  //  RETO 5 · Ordenar por subtotal, de mayor a menor
+  // ===========================================================================
+  // sort() MODIFICA POR DENTRO el arreglo que recibe. Como el que está dentro de
+  // la signal es el mismo arreglo de memoria, hacerlo directo corrupte el estado
+  // aunque la tabla se vea correcta. Por eso se copia antes con [...] y se
+  // ordena la COPIA.
+  //
+  // Nótese que parte de visibles() y no de productos(): así la lista filtrada
+  // del buscador también sale ordenada, en vez de romper el buscador de clase.
+  // ---------------------------------------------------------------------------
+  ordenados = computed(() =>
+    [...this.visibles()].sort((a, b) => b.precio * b.cantidad - a.precio * a.cantidad),
+  );
+
+  // ===========================================================================
   //  LOS MÉTODOS — cómo se cambia una signal
   // ===========================================================================
 
@@ -81,6 +128,19 @@ export class Tablero {
   reabastecer(nombre: string) {
     this.productos.update((lista) =>
       lista.map((p) => (p.nombre === nombre ? { ...p, cantidad: p.cantidad + 10 } : p)),
+    );
+  }
+
+  // ===========================================================================
+  //  RETO 4 · Vender todo lo que queda
+  // ===========================================================================
+  // Un solo update() con la cantidad en cero. No hay que acordarse de marcar la
+  // fila ni de recalcular el total: el [class.opacity-40] de la plantilla y los
+  // computed se encargan solos.
+  // ---------------------------------------------------------------------------
+  liquidar(nombre: string) {
+    this.productos.update((lista) =>
+      lista.map((p) => (p.nombre === nombre ? { ...p, cantidad: 0 } : p)),
     );
   }
 
