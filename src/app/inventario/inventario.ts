@@ -1,4 +1,5 @@
 import { Component, computed, signal } from '@angular/core';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 
 type Estado = 'agotado' | 'bajo' | 'disponible';
 
@@ -15,6 +16,7 @@ interface Fila extends Producto {
 
 @Component({
   selector: 'app-inventario',
+  imports: [CurrencyPipe, DatePipe],
   templateUrl: './inventario.html',
   styles: `
     .etq { border-radius: 999px; padding: .1rem .6rem; font-size: .72rem; font-weight: 700; }
@@ -24,6 +26,8 @@ interface Fila extends Producto {
   `,
 })
 export class Inventario {
+  hoy = new Date();
+
   categorias = ['Todas', 'Frutas', 'Verduras', 'Granos'];
 
   filtro = signal('Todas');

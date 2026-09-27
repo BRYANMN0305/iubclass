@@ -1,4 +1,4 @@
-<h1 class="text-2xl font-bold text-slate-900">Inventario</h1>
+<h1 class="text-2xl font-bold text-slate-900">Inventario · {{ hoy | date: 'fullDate' }}</h1>
 
 <div class="mt-4 flex flex-wrap gap-2">
   @for (c of categorias; track c) {
@@ -30,7 +30,9 @@
       @for (p of filas(); track p.nombre) {
         <tr class="border-t border-slate-100">
           <td class="px-4 py-3 font-semibold text-slate-900">{{ p.nombre }}</td>
-          <td class="px-4 py-3 text-right text-slate-600">{{ p.precio }}</td>
+          <td class="px-4 py-3 text-right text-slate-600">
+            {{ p.precio | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}
+          </td>
           <td class="px-4 py-3 text-right text-slate-600">{{ p.cantidad }}</td>
           <td class="px-4 py-3 text-right">
             @switch (p.estado) {
