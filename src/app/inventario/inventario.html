@@ -1,5 +1,21 @@
 <h1 class="text-2xl font-bold text-slate-900">Inventario</h1>
 
+<div class="mt-4 flex flex-wrap gap-2">
+  @for (c of categorias; track c) {
+    <button
+      type="button"
+      class="rounded-lg px-4 py-2 text-sm font-semibold"
+      [class.bg-slate-900]="filtro() === c"
+      [class.text-white]="filtro() === c"
+      [class.bg-slate-200]="filtro() !== c"
+      [class.text-slate-700]="filtro() !== c"
+      (click)="filtro.set(c)"
+    >
+      {{ c }}
+    </button>
+  }
+</div>
+
 <div class="mt-6 overflow-x-auto rounded-xl border border-slate-200">
   <table class="w-full text-left text-sm">
     <thead class="bg-slate-900 text-xs uppercase tracking-wider text-white">
@@ -10,7 +26,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (p of productos(); track p.nombre) {
+      @for (p of visibles(); track p.nombre) {
         <tr class="border-t border-slate-100">
           <td class="px-4 py-3 font-semibold text-slate-900">{{ p.nombre }}</td>
           <td class="px-4 py-3 text-right text-slate-600">{{ p.precio }}</td>
