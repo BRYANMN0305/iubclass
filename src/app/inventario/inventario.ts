@@ -1,5 +1,6 @@
 import { Component, computed, signal } from '@angular/core';
 import { CurrencyPipe, DatePipe } from '@angular/common';
+import { UnidadesPipe } from './unidades-pipe';
 
 type Estado = 'agotado' | 'bajo' | 'disponible';
 
@@ -16,7 +17,7 @@ interface Fila extends Producto {
 
 @Component({
   selector: 'app-inventario',
-  imports: [CurrencyPipe, DatePipe],
+  imports: [CurrencyPipe, DatePipe, UnidadesPipe],
   templateUrl: './inventario.html',
   styles: `
     .etq { border-radius: 999px; padding: .1rem .6rem; font-size: .72rem; font-weight: 700; }

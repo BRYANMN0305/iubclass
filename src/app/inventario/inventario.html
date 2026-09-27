@@ -33,7 +33,7 @@
           <td class="px-4 py-3 text-right text-slate-600">
             {{ p.precio | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}
           </td>
-          <td class="px-4 py-3 text-right text-slate-600">{{ p.cantidad }}</td>
+          <td class="px-4 py-3 text-right text-slate-600">{{ p.cantidad | unidades }}</td>
           <td class="px-4 py-3 text-right">
             @switch (p.estado) {
               @case ('agotado') {
