@@ -1,5 +1,7 @@
 import { Component, computed, signal } from '@angular/core';
 
+type Estado = 'agotado' | 'bajo' | 'disponible';
+
 interface Producto {
   nombre: string;
   categoria: string;
@@ -7,9 +9,19 @@ interface Producto {
   cantidad: number;
 }
 
+interface Fila extends Producto {
+  estado: Estado;
+}
+
 @Component({
   selector: 'app-inventario',
   templateUrl: './inventario.html',
+  styles: `
+    .etq { border-radius: 999px; padding: .1rem .6rem; font-size: .72rem; font-weight: 700; }
+    .rojo { background: #fee2e2; color: #991b1b; }
+    .ambar { background: #fef3c7; color: #92400e; }
+    .verde { background: #d1fae5; color: #065f46; }
+  `,
 })
 export class Inventario {
   categorias = ['Todas', 'Frutas', 'Verduras', 'Granos'];
@@ -30,4 +42,13 @@ export class Inventario {
     if (categoria === 'Todas') return this.productos();
     return this.productos().filter((p) => p.categoria === categoria);
   });
+
+  filas = computed<Fila[]>(() =>
+    this.visibles().map((p) => ({ ...p, estado: this.estadoDe(p.cantidad) })),
+  );
+
+  private estadoDe(cantidad: number): Estado {
+    if (cantidad === 0) return 'agotado';
+    return cantidad < 3 ? 'bajo' : 'disponible';
+  }
 }

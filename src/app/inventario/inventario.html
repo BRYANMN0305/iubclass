@@ -23,18 +23,32 @@
         <th class="px-4 py-3">Producto</th>
         <th class="px-4 py-3 text-right">Precio</th>
         <th class="px-4 py-3 text-right">Existencias</th>
+        <th class="px-4 py-3 text-right">Estado</th>
       </tr>
     </thead>
     <tbody>
-      @for (p of visibles(); track p.nombre) {
+      @for (p of filas(); track p.nombre) {
         <tr class="border-t border-slate-100">
           <td class="px-4 py-3 font-semibold text-slate-900">{{ p.nombre }}</td>
           <td class="px-4 py-3 text-right text-slate-600">{{ p.precio }}</td>
           <td class="px-4 py-3 text-right text-slate-600">{{ p.cantidad }}</td>
+          <td class="px-4 py-3 text-right">
+            @switch (p.estado) {
+              @case ('agotado') {
+                <span class="etq rojo">Agotado</span>
+              }
+              @case ('bajo') {
+                <span class="etq ambar">Bajo</span>
+              }
+              @default {
+                <span class="etq verde">Disponible</span>
+              }
+            }
+          </td>
         </tr>
       } @empty {
         <tr>
-          <td colspan="3" class="px-4 py-6 text-center text-slate-400">
+          <td colspan="4" class="px-4 py-6 text-center text-slate-400">
             No hay productos en esta categoría
           </td>
         </tr>
