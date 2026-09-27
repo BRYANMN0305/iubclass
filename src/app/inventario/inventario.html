@@ -28,7 +28,7 @@
     </thead>
     <tbody>
       @for (p of filas(); track p.nombre) {
-        <tr class="border-t border-slate-100">
+        <tr class="border-t border-slate-100" [class.agotado]="p.estado === 'agotado'">
           <td class="px-4 py-3 font-semibold text-slate-900">{{ p.nombre }}</td>
           <td class="px-4 py-3 text-right text-slate-600">
             {{ p.precio | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}

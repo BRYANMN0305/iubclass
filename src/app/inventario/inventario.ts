@@ -20,6 +20,8 @@ interface Fila extends Producto {
   imports: [CurrencyPipe, DatePipe, UnidadesPipe],
   templateUrl: './inventario.html',
   styles: `
+    .agotado { background: #fee2e2; }
+    .agotado td { color: #991b1b; }
     .etq { border-radius: 999px; padding: .1rem .6rem; font-size: .72rem; font-weight: 700; }
     .rojo { background: #fee2e2; color: #991b1b; }
     .ambar { background: #fef3c7; color: #92400e; }
