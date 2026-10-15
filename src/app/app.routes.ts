@@ -6,6 +6,7 @@ import { Frutas } from './frutas/frutas';
 import { Inventario } from './inventario/inventario';
 import { S04 } from './s04/s04';
 import { Pedido } from './taller03/pedido';
+import { Inventario as InventarioParcial } from './parcial1/inventario';
 
 // El mapa de rutas de la aplicación: qué componente se muestra en cada URL.
 // Esto se ve completo en la S09. Hoy solo dejamos el esqueleto para que la
@@ -18,6 +19,7 @@ export const routes: Routes = [
   { path: 'inventario', component: Inventario }, // Taller 02
   { path: 's04', component: S04 }, // ejemplos de la sesión S04
   { path: 'taller03', component: Pedido }, // Taller 03
+  { path: 'parcial1', component: InventarioParcial }, // Parcial 1 · Práctico
   { path: 'acerca', component: Acerca },
   { path: '**', redirectTo: 'tablero' }, // cualquier otra URL vuelve al tablero
 ];
